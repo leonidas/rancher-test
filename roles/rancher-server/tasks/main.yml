@@ -1,5 +1,28 @@
+- name: "Setup nginx vhost for {{ rancher_server_hostname }}"
+  template: src=rancher-server.nginx.j2 dest=/etc/nginx/sites-available/{{ rancher_server_hostname }} mode=0644
+  notify: restart nginx
+  tags: [rancher-server-nginx]
+
+- name: "Enable nginx vhost for {{ rancher_server_hostname }}"
+  file: >
+    src=/etc/nginx/sites-available/{{ rancher_server_hostname }}
+    path=/etc/nginx/sites-enabled/{{ rancher_server_hostname }}
+    state=link
+  notify: restart nginx
+  tags: [rancher-server-nginx]
+
+- name: "Setup htpasswd file for {{ rancher_server_hostname }}"
+  copy:
+    dest: /etc/nginx/{{rancher_server_hostname }}.htpasswd
+    content: "{{ rancher_server_basic_auth_username }}:{{ rancher_server_basic_auth_password_hash}}"
+  when: "{{ rancher_server_basic_auth }}"
+  tags: [rancher-server-nginx]
+
 - name: "Create rancher-server container"
   docker_container:
     name: rancher-server
-    image: rancher/server
+    image: "{{ rancher_server_image }}"
     restart_policy: unless-stopped
+    ports:
+      - "{{ rancher_server_port }}:8080"
+  tags: [rancher-server-docker]

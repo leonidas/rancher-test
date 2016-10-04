@@ -1,0 +1,44 @@
+server {
+    listen 80;
+    server_name {{ rancher_server_hostname }};
+
+{% if rancher_server_letsencrypt %}
+    location /.well-known/acme-challenge/ {
+        alias /srv/letsencrypt/challenges/;
+        try_files $uri =404;
+    }
+
+{% endif %}
+{% if rancher_server_ssl %}
+    location / {
+        return 302 https://$host$request_uri;
+    }
+}
+
+server {
+    listen 443 http2;
+    server_name {{ rancher_server_hostname }};
+
+    add_header Strict-Transport-Security max-age=15768000;
+
+    ssl on;
+    ssl_certificate {{ rancher_server_ssl_certificate }};
+    ssl_certificate_key {{ rancher_server_ssl_certificate_key }};
+
+{% endif %}
+    location / {
+        proxy_pass http://localhost:{{ rancher_server_port }};
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+{% if rancher_server_basic_auth %}
+        auth_basic {{ rancher_server_hostname }};
+        auth_basic_user_file /etc/nginx/{{ rancher_server_hostname }}.htpasswd;
+
+{% endif %}
+    }
+}

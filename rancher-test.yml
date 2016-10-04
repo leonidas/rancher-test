@@ -6,5 +6,11 @@
     - role: docker
       tags: [docker]
 
+    - role: nginx
+      tags: [nginx]
+
     - role: rancher-server
       tags: [rancher-server]
+
+    - role: letsencrypt
+      tags: [letsencrypt]

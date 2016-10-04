@@ -1,0 +1,10 @@
+rancher_server_image: rancher/server
+rancher_server_hostname: rancher1.leonidasoy.fi
+rancher_server_port: 8080
+rancher_server_ssl: true
+rancher_server_letsencrypt: true
+rancher_server_ssl_certificate: /srv/letsencrypt/secrets/rancher1.leonidasoy.fi/chained.pem
+rancher_server_ssl_certificate_key: /srv/letsencrypt/secrets/rancher1.leonidasoy.fi/domain.key
+rancher_server_basic_auth_username: rancher
+rancher_server_basic_auth_password_hash: $6$VhROy2sbjJlYb$4YOmIg4yej6C5O6YhDmRZ2S009MKse3GdkqeSwbLyrZ2Ssi14BnP.oWAhCBS.wCg9G/uhLHlPBAj.F/ZHnEOv.
+rancher_server_basic_auth: false
