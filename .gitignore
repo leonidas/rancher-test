@@ -1,0 +1,4 @@
+.vagrant/
+*.retry
+.vault_pass.txt
+*.log

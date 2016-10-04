@@ -1,0 +1,10 @@
+- hosts: rancher-servers
+  roles:
+    - role: base
+      tags: [base]
+
+    - role: docker
+      tags: [docker]
+
+    - role: rancher-server
+      tags: [rancher-server]

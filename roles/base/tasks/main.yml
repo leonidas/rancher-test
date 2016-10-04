@@ -1,0 +1,6 @@
+---
+- include: locale.yml
+- include: ssh.yml
+- include: apt.yml
+- include: admins.yml
+- include: firewall.yml

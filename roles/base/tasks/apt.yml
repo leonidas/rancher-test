@@ -1,0 +1,32 @@
+- name: Disable APT::Install-Recommends and APT::Install-Suggests
+  copy: src=00jumalauta.conf dest=/etc/apt/apt.conf.d/00jumalauta.conf
+
+- name: Install some basic packages
+  apt: name={{ item }} state=installed
+  with_items:
+    - acl
+    - apt-transport-https
+    - build-essential
+    - ca-certificates
+    - curl
+    - git
+    - htop
+    - man-db
+    - ntp
+    - python-apt
+    - python-pip
+    - python-dev
+    - rsync
+    - screen
+    - vim
+    - wget
+    - whois
+
+- name: Update pip, setuptools and wheel
+  pip:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - pip
+    - setuptools
+    - wheel

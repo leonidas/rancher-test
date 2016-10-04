@@ -1,0 +1,5 @@
+- name: "Create rancher-server container"
+  docker_container:
+    name: rancher-server
+    image: rancher/server
+    restart_policy: unless-stopped
