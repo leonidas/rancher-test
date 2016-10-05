@@ -21,6 +21,7 @@ Rancher gives a good copy-pasteable command for adding nodes,
 
 - [ ] Figure out how SSL certificates and load balancers work under Rancher
 - [ ] Try running some actual app like Jenkins
+- [ ] How does one access container logs?
 
 ### For production
 
